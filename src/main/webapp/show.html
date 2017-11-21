@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                type:"get",
+                url: "/showUser",
+                dataType: "json",
+                data:{id:"3"},
+                success: function (data) {
+                   var obj = eval(data)
+                    if(obj["success"]) {
+                        $("#user_id").html(obj["data"]["username"]);
+                    }else {
+                        $("#user_id").html(obj["message"]);
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div>
+    id:
+    <div id="user_id"></div>
+    <br/>
+    用户名:
+    <div id="user_username"></div>
+    <br/>
+    密码:
+    <div id="user_password"></div>
+    <br/>
+    <button id="showUserData"></button>
+</div>
+</body>
+</html>

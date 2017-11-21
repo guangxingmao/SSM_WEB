@@ -5,31 +5,41 @@ package com.mgx.controller;
  */
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import com.mgx.pojo.ResponseResult;
 import com.mgx.pojo.User;
 import com.mgx.service.IUserService;
-import com.mysql.jdbc.log.Log;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
     @Resource
     private IUserService userService;
 
+    /**
+     * @param id 用户id
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/showUser", method = RequestMethod.GET)
-    public ResponseResult toIndex(int id) {
-        User user = this.userService.getUserById(id);
+    public ResponseResult toIndex(@RequestParam(required = true ) int id) {
         ResponseResult<User> userResponseResult = new ResponseResult<User>();
-        userResponseResult.setData(user);
+        try {
+            User user = this.userService.getUserById(id);
+            userResponseResult.setData(user);
+            userResponseResult.setSuccess(true);
+        } catch (Exception e) {
+            userResponseResult.setSuccess(false);
+            userResponseResult.setMessage(e.toString());
+        }
         return userResponseResult;
     }
+
+    @RequestMapping(value = "/{location}",method = RequestMethod.GET)
+    public String toUrl(@PathVariable String location) {
+        return location;
+    }
+
 }

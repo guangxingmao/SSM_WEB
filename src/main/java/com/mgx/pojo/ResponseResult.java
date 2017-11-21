@@ -5,16 +5,16 @@ package com.mgx.pojo;
  */
 public class ResponseResult<T> {
 
-    private int code;
+    private boolean success;
     private String message;
     private T data;
 
-    public int getCode() {
-        return code;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getMessage() {
